@@ -42,7 +42,7 @@ donkey-kong-rl/
     ├── exploracion_con_politica_aleatoria.png
     ├── Monte_Carlo_vs_Q-Learning.png
     ├── Monte_Carlo_politica_greedy.png
-    ├── MC_impacto_del_decaimiento_de_ɛ.png
+    ├── MC_impacto_del_decaimiento_de_epsilon.png
     ├── MC_vs_QL_entorno_estocastico.png
     └── Q-Learning_politica_greedy.png
 ```
@@ -138,7 +138,7 @@ The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, cross
 
 **3. What happens without ε decay?** With fixed ε = 0.20, the agent keeps exploring randomly 20% of the time even after learning a good policy. Mean reward in the last 500 episodes drops from 11.92 (with decay) to 9.57 (fixed ε), because random actions derail otherwise successful episodes.
 
-![Impact of ε decay](figures/MC_impacto_del_decaimiento_de_ɛ.png)
+![Impact of ε decay](figures/MC_impacto_del_decaimiento_de_epsilon.png)
 
 **4. Which handles stochastic environments better?** Q-Learning. Under 10% slip probability, Q-Learning converges in all 5 seeds (mean reward ~10.95). MC degrades — 2 out of 5 seeds fail to converge, and the high variance from complete-episode updates makes it harder to average out the noise from individual slips.
 
