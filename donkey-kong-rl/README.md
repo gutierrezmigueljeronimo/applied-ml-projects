@@ -127,7 +127,7 @@ Q-Learning converges in **all 5 seeds**. Monte Carlo converges in only **2 out o
 `(0,0) → (0,1) → (0,2) → (3,0) → (3,1) → (3,2) → (3,3) → (5,3) → (5,4) → (5,5)` — **9 steps**.
 The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, crosses row 3 to the second ladder at `(3,3)`, descends to `(5,3)`, and reaches the goal. Both algorithms independently converge on the identical route:
 
-![Monte Carlo learned greedy policy](figures/Monte_Carlo_politica_greedy_aprendida.png)
+![Monte Carlo learned greedy policy](figures/Monte_Carlo_politica_greedy.png)
 ![Q-Learning greedy policy](figures/Q-Learning_politica_greedy.png)
 
 ### Analysis questions
