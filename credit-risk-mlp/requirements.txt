@@ -1,0 +1,11 @@
+# Deep learning
+tensorflow>=2.13
+
+# Data and preprocessing
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.5
+
+# Visualisation
+matplotlib>=3.7
+seaborn>=0.12
