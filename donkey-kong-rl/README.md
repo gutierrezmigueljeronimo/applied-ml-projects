@@ -10,7 +10,7 @@ Academic project · Centro EUSA, Sevilla · 2025–2026 · Team project
 
 Reinforcement learning algorithms differ not just in their convergence speed but in their fundamental assumptions about the world: Monte Carlo waits until the end of an episode to learn, while Q-Learning updates at every step. This project implements both on a custom Donkey Kong-inspired 6×6 grid world and answers five concrete questions about convergence, solution quality, exploration, robustness to noise, and policy structure.
 
-**Key finding:** Q-Learning converges consistently across all 5 seeds in 5,000 episodes. Monte Carlo converges in only 3 out of 5 seeds even with 20,000 episodes — a structural consequence of its episode-complete update mechanism, not a bug.
+**Key finding:** Q-Learning converges consistently across all 5 seeds in the standard 5,000-episode run. Monte Carlo converges in only 2 out of 5 seeds under the same conditions; extending training to 20,000 episodes recovers a third seed, but two seeds (42 and 13) never converge regardless of episode count — a structural consequence of its episode-complete update mechanism, not a bug.
 
 **Both algorithms find the same optimal 9-step policy when they converge.**
 
@@ -35,7 +35,6 @@ This is a two-person team project. The notebook is structured so each algorithm 
 ```
 donkey-kong-rl/
 ├── Donkey_Kong_Inverso.ipynb   — full notebook: environment, MC, Q-Learning, analysis
-├── Logs_DK.txt                 — training output logs with all numerical results
 ├── requirements.txt
 └── figures/
     ├── mapa_del_entorno.png
@@ -43,8 +42,7 @@ donkey-kong-rl/
     ├── exploracion_con_politica_aleatoria.png
     ├── Monte_Carlo_vs_Q-Learning.png
     ├── Monte_Carlo_politica_greedy.png
-    ├── Monte_Carlo_politica_greedy_aprendida.png
-    ├── MC_impacto_del_decaimiento_de_ɛ.png
+    ├── MC_impacto_del_decaimiento_de_epsilon.png
     ├── MC_vs_QL_entorno_estocastico.png
     └── Q-Learning_politica_greedy.png
 ```
@@ -67,6 +65,8 @@ donkey-kong-rl/
 
 S = Start (0,0)   G = Goal (5,5)   H = Hole   L = Ladder
 ```
+
+![Environment map](figures/mapa_del_entorno.png)
 
 **Movement rules:**
 - Actions: up, down, left, right (4 discrete actions).
@@ -95,11 +95,21 @@ Q-Learning updates the Q-table at **every step** using bootstrapping — it uses
 
 ---
 
+## How to read the curves
+
+All learning-curve figures in this README follow the same convention: a 100-episode moving average (solid line) with a ±1 standard deviation band across the 5 seeds. The demo below illustrates this on the random baseline, where the smoothed curve settles around a mean reward of roughly -14.5 while individual episodes swing much more widely.
+
+![Curve reading convention](figures/estructura_de_curvas.png)
+
+---
+
 ## Results
 
 ### Baseline: random policy
 
 A random policy reaches the goal in 7/20 episodes (35%), with a mean reward of -173.35 and frequent timeouts (>200 steps). This establishes the lower bound both algorithms must clearly surpass.
+
+![Random policy exploration](figures/exploracion_con_politica_aleatoria.png)
 
 ### Deterministic environment (5,000 episodes, 5 seeds)
 
@@ -115,7 +125,10 @@ Q-Learning converges in **all 5 seeds**. Monte Carlo converges in only **2 out o
 
 **Optimal policy (both algorithms, where MC converges):**
 `(0,0) → (0,1) → (0,2) → (3,0) → (3,1) → (3,2) → (3,3) → (5,3) → (5,4) → (5,5)` — **9 steps**.
-The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, crosses row 3 to the second ladder at `(3,3)`, descends to `(5,3)`, and reaches the goal.
+The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, crosses row 3 to the second ladder at `(3,3)`, descends to `(5,3)`, and reaches the goal. Both algorithms independently converge on the identical route:
+
+![Monte Carlo learned greedy policy](figures/Monte_Carlo_politica_greedy.png)
+![Q-Learning greedy policy](figures/Q-Learning_politica_greedy.png)
 
 ### Analysis questions
 
@@ -125,6 +138,8 @@ The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, cross
 
 **3. What happens without ε decay?** With fixed ε = 0.20, the agent keeps exploring randomly 20% of the time even after learning a good policy. Mean reward in the last 500 episodes drops from 11.92 (with decay) to 9.57 (fixed ε), because random actions derail otherwise successful episodes.
 
+![Impact of ε decay](figures/MC_impacto_del_decaimiento_de_epsilon.png)
+
 **4. Which handles stochastic environments better?** Q-Learning. Under 10% slip probability, Q-Learning converges in all 5 seeds (mean reward ~10.95). MC degrades — 2 out of 5 seeds fail to converge, and the high variance from complete-episode updates makes it harder to average out the noise from individual slips.
 
 | Metric (stochastic, last 500 ep) | Monte Carlo | Q-Learning |
@@ -132,6 +147,8 @@ The agent moves right to the first ladder at `(0,2)`, descends to `(3,0)`, cross
 | Mean reward | 10.92 | **10.98** |
 | Success rate | **100.0%** | **100.0%** |
 | Mean steps (successful) | 10.1 | **10.0** |
+
+![MC vs QL in stochastic environment](figures/MC_vs_QL_entorno_estocastico.png)
 
 **5. Does the policy avoid holes and use ladders?** Yes — both policies correctly avoid holes at `(2,1)` and `(2,3)` by routing through rows 0 and 3, and actively use the two key ladders to reduce the path to 9 steps.
 
@@ -145,7 +162,7 @@ pip install -r requirements.txt
 
 Open `Donkey_Kong_Inverso.ipynb` in Jupyter, VS Code, or Google Colab and run all cells sequentially. The notebook was originally developed in Google Colab (Python 3.10).
 
-All outputs and figures are generated inline. Numerical results are also captured in `Logs_DK.txt`.
+All outputs and figures are generated inline and saved to `figures/`.
 
 ---
 
