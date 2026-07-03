@@ -1,0 +1,4 @@
+*.ipynb linguist-detectable=false
+*.png binary
+*.keras binary
+*.pkl binary
