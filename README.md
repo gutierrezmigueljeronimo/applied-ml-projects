@@ -103,10 +103,9 @@ applied-ml-projects/
         ├── estructura_de_curvas.png
         ├── exploracion_con_politica_aleatoria.png
         ├── mapa_del_entorno.png
-        ├── MC_impacto_del_decaimiento_de_ɛ.png
+        ├── MC_impacto_del_decaimiento_de_epsilon.png
         ├── MC_vs_QL_entorno_estocastico.png
         ├── Monte_Carlo_politica_greedy.png
-        ├── Monte_Carlo_politica_greedy_aprendida.png
         ├── Monte_Carlo_vs_Q-Learning.png
         └── Q-Learning_politica_greedy.png
 ```
