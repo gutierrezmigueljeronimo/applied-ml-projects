@@ -41,7 +41,7 @@ donkey-kong-rl/
     ├── estructura_de_curvas.png
     ├── exploracion_con_politica_aleatoria.png
     ├── Monte_Carlo_vs_Q-Learning.png
-    ├── Monte_Carlo_politica_greedy_aprendida.png
+    ├── Monte_Carlo_politica_greedy.png
     ├── MC_impacto_del_decaimiento_de_ɛ.png
     ├── MC_vs_QL_entorno_estocastico.png
     └── Q-Learning_politica_greedy.png
